@@ -162,6 +162,36 @@ export const readLastSetting = (db) => {
     });
 }
 
+export const readAllSetting = (db) => {
+    let sql = `
+        SELECT A.*, COUNT(B.id) as squares
+            FROM tbl_setting A
+            LEFT JOIN tbl_square B
+                on A.id = B.settingId
+            GROUP BY A.id
+            ORDER BY A.id DESC
+    `;
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            let result = [];
+            tx.executeSql(
+                sql,
+                [],
+                (tx, resultSet) => {
+                    for (let i = 0; i < resultSet.rows.length; i++) {
+                        result.push(resultSet.rows.item(i))
+                    }
+                    resolve(result);
+                },
+                (error) => {
+                    console.log("error on Read All Setting ", error);
+                    reject(error);
+                }
+            )
+        })
+    });
+}
+
 export const readLastSquare = (db) => {
     let sql = "SELECT * FROM tbl_square ORDER BY id DESC LIMIT 1";
     return new Promise((resolve, reject) => {

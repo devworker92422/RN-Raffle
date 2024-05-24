@@ -69,6 +69,9 @@ const BoardScreen = ({ navigation }) => {
         setSquareCount(squareCount + 1);
         dispatch(settingAction({ type: 'squares', data: (squareCount + 1) }));
         dispatch(squareAction({ type: 'lastSquareId', data: (squareId + 1) }));
+        setName("");
+        setPhone("");
+        setFormattedPhone("");
         setContentModal(false);
     }
 
@@ -127,7 +130,7 @@ const BoardScreen = ({ navigation }) => {
                         <View >
                             {
                                 error ? (
-                                    <Text variant='displaySmall' style={styles.errorTxt}>No Square is solden</Text>
+                                    <Text variant='displaySmall' style={styles.errorTxt}>No Square is sold</Text>
                                 ) : (
                                     <View>
                                         <Text variant='displaySmall' style={styles.boldTxt}>Result</Text>
@@ -137,11 +140,11 @@ const BoardScreen = ({ navigation }) => {
                                         <View style={styles.winnerInfo}>
                                             <Text variant="headlineMedium" style={styles.boldTxt}>{winner.name}</Text>
                                             <Text variant="headlineMedium" style={styles.boldTxt}>{winner.phoneNumber}</Text>
+                                            <Text variant="headlineMedium" style={styles.boldTxt}>$ {calcWinnerPrize()}</Text>
                                         </View>
                                     </View>
                                 )
                             }
-
                             <Button mode="contained" onPress={onPressOkOfWinner} style={styles.btnText}>Ok</Button>
                         </View>
                     </Modal>
@@ -201,7 +204,7 @@ const BoardScreen = ({ navigation }) => {
                         <Text variant="titleLarge" style={styles.lightTxt}>$ {setting.price}</Text>
                     </View>
                     <View style={styles.variable}>
-                        <Text variant="titleLarge" style={styles.boldTxt}>Solden Squares : </Text>
+                        <Text variant="titleLarge" style={styles.boldTxt}>Sold Squares : </Text>
                         <Text variant="titleLarge" style={styles.lightTxt}>{squareCount}</Text>
                     </View>
                     <View style={styles.variable}>

@@ -1,0 +1,1 @@
+export const TABLE_ITEMS_PER_PAGE = [3, 5, 7];
