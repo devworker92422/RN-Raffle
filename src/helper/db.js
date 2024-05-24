@@ -1,10 +1,8 @@
 import SQLite from 'react-native-sqlite-storage';
-import md5 from 'md5';
 import {
     DEFAULT_USER_NAME,
     DEFAULT_USER_PASSWORD
 } from '../config';
-import { dateTime2Str } from './dateTime';
 
 export const connectDB = (dbFileName) => {
     return SQLite.openDatabase(
