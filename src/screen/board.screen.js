@@ -21,6 +21,7 @@ import {
     insertSquare,
     readSquareOfSetting,
     updateSetting,
+    updateWinnerOfSetting,
     dateTime2Str,
     endDate2Str,
 } from "../helper";
@@ -45,7 +46,7 @@ const BoardScreen = ({ navigation }) => {
 
     const phoneInput = useRef(null);
 
-    const onPressSquare = () => {
+    const onPressSquare = async () => {
         setContentModal(true);
     }
 
@@ -100,8 +101,13 @@ const BoardScreen = ({ navigation }) => {
                 name: result[winnerId].name,
                 phoneNumber: result[winnerId].phoneNumber
             });
+            let winnerParam = {
+                id: setting.id,
+                name: result[winnerId].name,
+                phone: result[winnerId].phoneNumber
+            }
+            await updateWinnerOfSetting(winnerParam, db);
         }
-
         await updateSetting(settingParam, db);
         setWinnerModal(true);
     }
@@ -221,7 +227,7 @@ const BoardScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#338000',
         alignItems: 'right',
         justifyContent: 'center',
         padding: 25

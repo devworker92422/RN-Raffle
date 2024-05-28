@@ -47,6 +47,8 @@ export const createSettingTable = (db) => {
           "profit" integer(11),
           "isFinished" integer(11),
           "endDate" text(255),
+          "name" text(255),
+          "phone" text(255),
           "createAt" text(255));
       `;
     return new Promise((resolve, reject) => {
@@ -314,7 +316,28 @@ export const updateSetting = (data, db) => {
             );
         });
     });
+}
 
+export const updateWinnerOfSetting = (data, db) => {
+    let sql = "UPDATE tbl_setting SET name = ?, phone = ? WHERE id = ?";
+    let params = [data.name, data.phone, data.id];
+    console.log(params);
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                sql,
+                params,
+                (tx, resultSet) => {
+                    resolve(resultSet);
+                },
+                (error) => {
+                    console.log("error on update winner of setting ");
+                    reject(error);
+                    console.log(error)
+                }
+            );
+        });
+    });
 }
 
 
@@ -323,11 +346,47 @@ export const removeSetting = (db) => {
 }
 
 export const removeSquare = (db) => {
-
+    let sql = `
+        DELETE FROM tbl_square WHERE 1=1 
+    `;
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                sql,
+                [],
+                (tx, resultSet) => {
+                    console.log("success in delete square list");
+                    resolve(resultSet);
+                },
+                (error) => {
+                    console.log("error ", error)
+                    reject(error);
+                }
+            );
+        });
+    });
 }
 
 export const removeAllSetting = (db) => {
-
+    let sql = `
+        DELETE FROM tbl_setting WHERE 1=1 
+    `;
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                sql,
+                [],
+                (tx, resultSet) => {
+                    console.log("success in delete setting list");
+                    resolve(resultSet);
+                },
+                (error) => {
+                    console.log("error ", error)
+                    reject(error);
+                }
+            );
+        });
+    });
 }
 
 export const AuthLogin = (db) => {
@@ -336,7 +395,7 @@ export const AuthLogin = (db) => {
 
 export const dropUserTable = (db) => {
     let sql = `
-        DROP TABLE tbl_setting;
+        DROP TABLE tbl_user;
     `
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {

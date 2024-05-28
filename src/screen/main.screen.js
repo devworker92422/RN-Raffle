@@ -38,7 +38,7 @@ const MainScreen = ({ navigation }) => {
         navigation.navigate('board');
     }
 
-    const onPressSettingBtn = () => {
+    const onPressSettingBtn = async () => {
         if (lastSetting.isFinished == 0) {
             Alert.alert('Raffle', 'Do you want to start new raffle', [
                 {
@@ -98,9 +98,11 @@ const MainScreen = ({ navigation }) => {
                     const lastSetting = await readLastSetting(connection);
                     const lastSquare = await readLastSquare(connection);
                     if (lastSetting.status && lastSetting.data) {
-                        Object.keys(lastSetting.data).map((key) => {
-                            dispatch(settingAction({ type: key, data: lastSetting.data[key] }));
-                        });
+                        if (lastSetting.isFinished == 1) {
+                            Object.keys(lastSetting.data).map((key) => {
+                                dispatch(settingAction({ type: key, data: lastSetting.data[key] }));
+                            });
+                        }
                     }
                     if (lastSquare.status && lastSquare.data) {
                         dispatch(squareAction({ type: 'lastSquareId', data: lastSquare.data.id }));

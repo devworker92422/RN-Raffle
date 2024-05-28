@@ -33,7 +33,7 @@ const SettingScreen = ({ navigation }) => {
         setProfit(parseInt(value).toString());
     }
 
-    const onPressCalendarIcon = (value) => {
+    const onPressCalendarIcon = () => {
         setOpen(true);
     }
 
@@ -70,6 +70,7 @@ const SettingScreen = ({ navigation }) => {
         Object.keys(params).map((a) => {
             dispatch(settingAction({ type: a, data: params[a] }));
         });
+        dispatch(settingAction({ type: "squares", data: 0 }));
         navigation.navigate('main');
     }
 

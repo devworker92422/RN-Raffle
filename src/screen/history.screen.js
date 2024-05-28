@@ -12,6 +12,8 @@ import {
 import {
     connectDB,
     readAllSetting,
+    removeAllSetting,
+    removeSquare,
 } from "../helper";
 import { DB_FILE_NAME } from "../config";
 import { TABLE_ITEMS_PER_PAGE } from "../constant";
@@ -58,6 +60,14 @@ const HistoryScreen = ({ navigation }) => {
         setItems([...result]);
     }
 
+    const clearHistory = async () => {
+        const db = connectDB(DB_FILE_NAME);
+        await removeAllSetting(db);
+        await removeSquare(db);
+        setItems([]);
+    }
+
+
     useEffect(() => {
         init();
     }, [])
@@ -75,6 +85,12 @@ const HistoryScreen = ({ navigation }) => {
                         </DataTable.Title>
                         <DataTable.Title style={styles.headerTxt}>
                             <Text variant="bodyMedium">Profit</Text>
+                        </DataTable.Title>
+                        <DataTable.Title style={styles.headerTxt}>
+                            <Text variant="bodyMedium">Winner Name</Text>
+                        </DataTable.Title>
+                        <DataTable.Title style={styles.headerTxt}>
+                            <Text variant="bodyMedium">Phone </Text>
                         </DataTable.Title>
                         <DataTable.Title style={styles.headerTxt}>
                             <Text variant="bodyMedium">Winner Prize</Text>
@@ -102,6 +118,12 @@ const HistoryScreen = ({ navigation }) => {
                                     <Text variant="labelLarge">$ {getPrize(item.profit, item.squares, item.price)}</Text>
                                 </DataTable.Cell>
                                 <DataTable.Cell>
+                                    <Text variant="labelLarge">{item.name}</Text>
+                                </DataTable.Cell>
+                                <DataTable.Cell>
+                                    <Text variant="labelLarge">{item.phone}</Text>
+                                </DataTable.Cell>
+                                <DataTable.Cell>
                                     <Text variant="labelLarge"> {getStatus(item.isFinished)}</Text>
                                 </DataTable.Cell>
                                 <DataTable.Cell>
@@ -123,9 +145,13 @@ const HistoryScreen = ({ navigation }) => {
                     />
                 </DataTable>
                 <View style={styles.footer}>
-                    <Button mode="contained" onPress={onPressBack}>
+                    <Button style={styles.button} mode="contained" onPress={clearHistory}>
+                        Clear
+                    </Button>
+                    <Button style={styles.button} mode="outlined" onPress={onPressBack}>
                         Back
                     </Button>
+
                 </View>
             </View >
         </Provider>
@@ -146,7 +172,14 @@ const styles = StyleSheet.create({
     },
     footer: {
         marginTop: 15,
-        marginBottom: 15
+        marginBottom: 15,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    button: {
+        marginLeft: 10,
+        marginRight: 10
     }
 });
 
