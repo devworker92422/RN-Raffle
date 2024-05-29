@@ -94,7 +94,7 @@ const BoardScreen = ({ navigation }) => {
         } else {
             let winnerId = Math.floor((Math.random() * result.length));
             setWinner({
-                id: winnerId,
+                id: winnerId + 1,
                 name: result[winnerId].name,
                 phoneNumber: result[winnerId].phoneNumber
             });
