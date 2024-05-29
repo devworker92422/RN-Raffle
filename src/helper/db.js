@@ -321,7 +321,6 @@ export const updateSetting = (data, db) => {
 export const updateWinnerOfSetting = (data, db) => {
     let sql = "UPDATE tbl_setting SET name = ?, phone = ? WHERE id = ?";
     let params = [data.name, data.phone, data.id];
-    console.log(params);
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(

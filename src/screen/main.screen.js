@@ -15,7 +15,6 @@ import {
     createSquareTable,
     insertUserData,
     readLastSetting,
-    readLastSquare,
     updateSetting,
     endDate2Str
 } from "../helper";
@@ -96,16 +95,12 @@ const MainScreen = ({ navigation }) => {
                     await insertUserData(connection);
                 } else {
                     const lastSetting = await readLastSetting(connection);
-                    const lastSquare = await readLastSquare(connection);
                     if (lastSetting.status && lastSetting.data) {
                         if (lastSetting.isFinished == 1) {
                             Object.keys(lastSetting.data).map((key) => {
                                 dispatch(settingAction({ type: key, data: lastSetting.data[key] }));
                             });
                         }
-                    }
-                    if (lastSquare.status && lastSquare.data) {
-                        dispatch(squareAction({ type: 'lastSquareId', data: lastSquare.data.id }));
                     }
                 }
                 dispatch(dbAction({ type: "dbFlag", data: true }));

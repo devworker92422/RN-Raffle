@@ -26,17 +26,15 @@ import {
     endDate2Str,
 } from "../helper";
 import { settingAction } from "../store/slice/setting.slice";
-import { squareAction } from "../store/slice/square.slice";
 import { DB_FILE_NAME } from "../config";
 
 const BoardScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const setting = useSelector((state) => state.setting);
-    const { lastSquareId } = useSelector((state) => state.square);
     const [winnerModal, setWinnerModal] = useState(false);
     const [contentModal, setContentModal] = useState(false);
     const [current, setCurrent] = useState(new Date());
-    const [squareId, setSquareID] = useState(lastSquareId + 1);
+    const [squareId, setSquareID] = useState(setting.squares + 1);
     const [squareCount, setSquareCount] = useState(setting.squares);
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -69,7 +67,6 @@ const BoardScreen = ({ navigation }) => {
         setSquareID(squareId + 1);
         setSquareCount(squareCount + 1);
         dispatch(settingAction({ type: 'squares', data: (squareCount + 1) }));
-        dispatch(squareAction({ type: 'lastSquareId', data: (squareId + 1) }));
         setName("");
         setPhone("");
         setFormattedPhone("");
@@ -97,7 +94,7 @@ const BoardScreen = ({ navigation }) => {
         } else {
             let winnerId = Math.floor((Math.random() * result.length));
             setWinner({
-                id: result[winnerId].id,
+                id: winnerId,
                 name: result[winnerId].name,
                 phoneNumber: result[winnerId].phoneNumber
             });

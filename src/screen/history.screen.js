@@ -67,7 +67,6 @@ const HistoryScreen = ({ navigation }) => {
         setItems([]);
     }
 
-
     useEffect(() => {
         init();
     }, [])
