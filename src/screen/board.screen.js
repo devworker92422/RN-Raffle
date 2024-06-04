@@ -189,7 +189,7 @@ const BoardScreen = ({ navigation }) => {
                 <View style={styles.boxContainer}>
                     <TouchableOpacity onPress={onPressSquare}>
                         <View style={styles.box}>
-                            <Text style={styles.squareText} >{squareId}</Text>
+                            <Text style={styles.squareText} >$ {setting.price}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

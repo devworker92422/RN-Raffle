@@ -114,14 +114,15 @@ const HistoryScreen = ({ navigation }) => {
                                     <Text variant="labelLarge">$ {getProfit(item.profit, item.squares, item.price)}</Text>
                                 </DataTable.Cell>
                                 <DataTable.Cell>
-                                    <Text variant="labelLarge">$ {getPrize(item.profit, item.squares, item.price)}</Text>
-                                </DataTable.Cell>
-                                <DataTable.Cell>
                                     <Text variant="labelLarge">{item.name}</Text>
                                 </DataTable.Cell>
                                 <DataTable.Cell>
                                     <Text variant="labelLarge">{item.phone}</Text>
                                 </DataTable.Cell>
+                                <DataTable.Cell>
+                                    <Text variant="labelLarge">$ {getPrize(item.profit, item.squares, item.price)}</Text>
+                                </DataTable.Cell>
+
                                 <DataTable.Cell>
                                     <Text variant="labelLarge"> {getStatus(item.isFinished)}</Text>
                                 </DataTable.Cell>
